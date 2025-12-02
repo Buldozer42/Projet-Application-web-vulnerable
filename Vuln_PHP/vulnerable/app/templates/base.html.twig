@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Symfony{% endblock %}</title>
+        <link rel="icon" type="image/jpg" href="{{ asset('images/favicon.ico') }}" />
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+            {{ ux_controller_link_tags() }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+{% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+
+    {% if app.request.pathinfo == path('app_login') or app.request.pathinfo == path('app_register') %}
+    <body class="h-screen overflow-hidden" style="background: rgb(203,226,255); background: linear-gradient(45deg, rgba(203,226,255,1) 0%, rgba(170,215,255,1) 50%, rgba(96,164,255,1) 100%);"></body>
+    {% else %}
+    <body>
+        <div class="flex items-center justify-end gap-x-2 bg-blue-500 text-white text-xl">
+            {% if app.user %}
+                <a class="p-2 border border-white rounded m-1 hover:bg-blue-700" href="{{ path('all-articles') }}">Accueil</a>
+                {% if is_granted('ROLE_STUDENT') %}
+                    <a class="p-2 border border-white rounded m-1 hover:bg-blue-700" href="{{ path('user-profile', {'id': app.user.getInscriptionId()}) }}">{{ app.user.email }}</a>
+                    <a href="{{ path('commande') }}" class="p-2 border border-white rounded m-1 hover:bg-blue-700 ">Actions</a>
+                {% endif %}
+                <a class="p-2 border border-white rounded m-1 hover:bg-blue-700" href="{{ path('logout') }}">Se déconnecter</a>
+            {% else %}
+                <a class="p-2 border border-white rounded m-1 hover:bg-blue-700" href="{{ path('app_login') }}">Se connecter</a>
+                <a class="p-2 border border-white rounded m-1 hover:bg-blue-700" href="{{ path('app_register') }}">S'inscrire</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    {% block body %}{% endblock %}
+    </body>
+</html>

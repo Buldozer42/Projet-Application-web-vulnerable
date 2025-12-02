@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ateliers{% endblock %}
+
+{% block body %}
+    <div class="max-w-7xl mx-auto mt-8 p-6 bg-white rounded-md shadow-md">
+        <div class="flex my-4">
+            <a href="{{ path('homepage') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white p-2 rounded">
+                <p>Back {#<i class="fa-solid fa-arrow-left fa-xl"></i>#}</p>
+            </a>
+        </div>
+        <h1 class="text-2xl font-semibold mb-6 text-center">Ateliers</h1>
+
+        <table class="min-w-full leading-normal mt-12 mb-12">
+            <thead>
+            <tr class="bg-blue-500 text-white p-5">
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Id</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Nom</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Intervenant</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Métier</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Salle</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Ressource</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Date de début</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Date de fin</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for atelier in ateliers %}
+                <tr>
+                    <td class="px-4 py-2">{{ atelier.id }}</td>
+                    <td class="px-4 py-2">{{ atelier.nom }}</td>
+                    <td class="px-4 py-2">{{ atelier.intervenant ? atelier.intervenant : 'Non défini' }}</td>
+                    <td class="px-4 py-2">
+                        {% for metiers in atelier.metier %}
+                            {{ metiers.nom }}{% if not loop.last %}, {% endif %}
+                        {% else %}
+                            Aucun métier(s)
+                        {% endfor %}
+                    </td>
+                    <td class="px-4 py-2">
+                        {% for salles in atelier.salle %}
+                            {{ salles.nom }}{% if not loop.last %}, {% endif %}
+                        {% else %}
+                            Aucune salle(s)
+                        {% endfor %}
+                    </td>
+                    <td class="px-4 py-2">
+                        {% for ressources in atelier.ressource %}
+                            {{ ressources.type }}{% if not loop.last %}, {% endif %}
+                        {% else %}
+                            Aucune ressource(s)
+                        {% endfor %}
+                    </td>
+                    <td class="px-4 py-2">{{ atelier.getDateDebut ? atelier.getDateDebut()|date('d-m-Y') : 'Non défini' }}</td>
+                    <td class="px-4 py-2">{{ atelier.getDateFin ? atelier.getDateFin()|date('d-m-Y') : 'Non défini' }}</td>
+                    <td class="px-4 py-2 flex justify-center">
+                        <a href="{{ path('app_atelier_show', {'id': atelier.id}) }}" class="flex items-center inline-block bg-blue-500 hover:bg-blue-700 text-white p-2 rounded">
+                            <p>show{# <i class="fa-regular fa-eye fa-xl"></i> #}</p>
+                        </a>
+                        <a href="{{ path('app_atelier_edit', {'id': atelier.id}) }}" class="inline-block bg-yellow-500 hover:bg-yellow-700 text-white p-2 rounded ml-4">
+                            <p>edit{# <i class="fa-solid fa-pen-to-square fa-xl"></i> #}</p>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="px-5 py-5 border-b border-gray-200 bg-white text-sm">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_atelier_new') }}" class="mt-4 bg-green-500 hover:bg-green-700 text-white p-2 rounded inline-block">
+            <p>Add <i class="fa-solid fa-plus fa-xl"></i></p>
+        </a>
+    </div>
+{% endblock %}

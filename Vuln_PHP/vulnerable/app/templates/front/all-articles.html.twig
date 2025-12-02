@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container mx-auto">
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="grid gap-2 m-24 mb-0 mt-8">
+                <div class="col-span-12 border-blue-500 rounded-lg align-center flex flex-col gap-y-2 text-center items-center p-8 shadow-lg m-8 hover:bg-gray-100">
+                    <p class="text-2xl mb-4">Ateliers</p>
+                    <p>Liste de tous les ateliers disponibles</p>
+                    <a class="bg-blue-500 py-1 px-3 rounded-lg text-white mt-4" href="{{ path('app_atelier_index') }}">Détails</a>
+                </div>
+                <div class="col-span-4 border-blue-500 rounded-lg flex flex-col gap-y-2 items-center text-center justify-center p-8 shadow-lg m-8 hover:bg-gray-100">
+                    <p class="text-2xl mb-4">Métier</p>
+                    <p>Liste de tous les métiers disponibles</p>
+                    <a class="bg-blue-500 py-1 px-3 rounded-lg text-white mt-4" href="{{ path('app_metier_index') }}">Détails</a>
+                </div>
+                <div class="col-span-4 border-blue-500 rounded-lg flex flex-col gap-y-2 items-center text-center justify-center p-8 shadow-lg m-8 hover:bg-gray-100">
+                    <p class="text-2xl mb-4">Activités</p>
+                    <p>Liste de toutes les activités disponibles</p>
+                    <a class="bg-blue-500 py-1 px-3 rounded-lg text-white mt-4" href="{{ path('app_activite_index') }}">Détails</a>
+                </div>
+                <div class="col-span-4 border-blue-500 rounded-lg flex flex-col gap-y-2 items-center text-center justify-center p-8 shadow-lg m-8 hover:bg-gray-100">
+                    <p class="text-2xl mb-4">Compétences</p>
+                    <p>Liste de toutes les compétences</p>
+                    <a class="bg-blue-500 py-1 px-3 rounded-lg text-white mt-4" href="{{ path('app_competence_index') }}">Détails</a>
+                </div>
+                <div class="col-span-4 border-blue-500 rounded-lg flex flex-col gap-y-2 items-center text-center justify-center p-8 shadow-lg m-8 hover:bg-gray-100">
+                    <p class="text-2xl mb-4">Secteurs</p>
+                    <p>Liste de tous les secteurs</p>
+                    <a class="bg-blue-500 py-1 px-3 rounded-lg text-white mt-4" href="{{ path('app_secteur_index') }}">Détails</a>
+                </div>
+                <div class="col-span-4 border-blue-500 rounded-lg flex flex-col gap-y-2 items-center text-center justify-center p-8 shadow-lg m-8 hover:bg-gray-100">
+                    <p class="text-2xl mb-4">Ressources</p>
+                    <p>Liste de toutes les ressources disponibles</p>
+                    <a class="bg-blue-500 py-1 px-3 rounded-lg text-white mt-4" href="{{ path('app_ressource_index') }}">Détails</a>
+                </div>
+                <div class="col-span-4 border-blue-500 rounded-lg flex flex-col gap-y-2 items-center text-center justify-center p-8 shadow-lg m-8 hover:bg-gray-100">
+                    <p class="text-2xl mb-4">Salles</p>
+                    <p>Liste de toutes les salles</p>
+                    <a class="bg-blue-500 py-1 px-3 rounded-lg text-white mt-4" href="{{ path('app_salle_index') }}">Détails</a>
+                </div>
+                <div class="col-span-4 border-blue-500 rounded-lg flex flex-col gap-y-2 items-center text-center justify-center p-8 shadow-lg m-8 hover:bg-gray-100">
+                    <p class="text-2xl mb-4">Lycéens</p>
+                    <p>Liste de tous les lycéens</p>
+                    <a class="bg-blue-500 py-1 px-3 rounded-lg text-white mt-4" href="{{ path('app_inscription_index') }}">Détails</a>
+                </div>
+                <div class="col-span-4 border-blue-500 rounded-lg flex flex-col gap-y-2 items-center text-center justify-center p-8 shadow-lg m-8 hover:bg-gray-100">
+                    <p class="text-2xl mb-4">Lycée</p>
+                    <p>Liste de tous les lycées des lycéens</p>
+                    <a class="bg-blue-500 py-1 px-3 rounded-lg text-white mt-4" href="{{ path('app_lycee_index') }}">Détails</a>
+                </div>
+                <div class="col-span-4 border-blue-500 rounded-lg flex flex-col gap-y-2 items-center text-center justify-center p-8 shadow-lg m-8 hover:bg-gray-100">
+                    <p class="text-2xl mb-4">Sections</p>
+                    <p>Liste de toutes les sections</p>
+                    <a class="bg-blue-500 py-1 px-3 rounded-lg text-white mt-4" href="{{ path('app_section_index') }}">Détails</a>
+                </div>
+            </div>
+        {% endif %}
+        <div class="mb-20 mt-4">
+            <h1 class="text-2xl font-bold mb-4 p-6 text-center">Forum 2024 - Liste des ateliers</h1>
+                
+                <form action="{{ path('all-articles') }}" method="get">
+                    <input type="text" name="q" value="{{ query }}" placeholder="Rechercher..." class="w-1/2 p-2 mb-4 border rounded-md ml-4">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded mr-4">Rechercher</button>
+                </form>
+
+                {% if results is defined and results|length > 0 %}
+                    <h2>Résultats de la recherche :</h2>
+                    <ul>
+                    {% for result in results %}
+                        <li>{{ result.nom }} - {{ result.intervenant }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+
+            {% if ateliers is not empty %}
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {% for atelier in ateliers %}
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h2 class="text-xl font-semibold mb-2">{{ atelier.nom }}</h2>
+                            <p class="text-gray-600 text-sm mb-2">
+                            </p>
+                            {% if query %}
+                            <p class="text-gray-600 text-sm mb-2">
+                                <span class="font-semibold">Date :</span> Du {{ atelier.date_debut }} au {{ atelier.date_fin }}
+                            </p>
+                            {% endif %}
+                            <p class="text-gray-600 text-sm mb-2">
+                                <span class="font-semibold">Salle :</span>
+                                Salle 125
+                            </p>
+                            <p class="text-gray-600 text-sm mb-2">
+                                <span class="font-semibold">Métier(s) :</span>
+                                Mathématiques
+                            </p>
+                            <p class="text-gray-600 text-sm mb-2">
+                                <span class="font-semibold">Ressource :</span>
+                                Logarithmes.pdf
+                            </p>
+                            <p class="text-gray-600 text-sm mb-2">
+                                <span class="font-semibold">Secteur :</span> Sciences
+                            </p>
+                            <div class="flex flex-col gap-2 items-center justify-center">
+                                <p class="inline-block px-5 bg-gray-500 text-white border rounded">
+                                    <span class="font-semibold">Intervenant(s):</span> {{ atelier.intervenant }}
+                                </p>
+                                {# <a href="{{ path('detail-atelier', {'id': atelier.getId()}) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold px-2 border border-blue-500 rounded">
+                                    Détail
+                                </a> #}
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-gray-500">Aucun atelier trouvé.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

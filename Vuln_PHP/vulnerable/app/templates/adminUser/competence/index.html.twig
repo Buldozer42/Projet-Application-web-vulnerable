@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compétences{% endblock %}
+
+{% block body %}
+    <div class="max-w-5xl mx-auto my-8 p-6 bg-white rounded-md shadow-md">
+        <h1 class="text-2xl font-semibold mb-6">Compétences</h1>
+        <a href="{{ path('homepage') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white p-2 rounded">
+            <p>Back {#<i class="fa-solid fa-arrow-left fa-xl"></i>#}</p>
+        </a>
+        <table class="min-w-full leading-normal mt-12 mb-12">
+            <thead>
+            <tr>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Id</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Nom</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for competence in competences %}
+                <tr class="hover:bg-gray-100">
+                    <td class="px-4 py-2">{{ competence.id }}</td>
+                    <td class="px-4 py-2">{{ competence.nom }}</td>
+                    <td class="px-4 py-2 flex justify-center">
+                        <a href="{{ path('app_competence_show', {'id': competence.id}) }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white p-2 rounded">
+                            <p>show{# <i class="fa-solid fa-eye fa-xl"></i> #}</p>
+                        </a>
+                        <a href="{{ path('app_competence_edit', {'id': competence.id}) }}" class="inline-block bg-yellow-500 hover:bg-yellow-700 text-white p-2 rounded ml-4">
+                            <p>edit{# <i class="fa-solid fa-pen fa-xl"></i> #}</p>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="px-4 py-2">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_competence_new') }}" class="mt-4 bg-green-500 hover:bg-green-700 text-white p-2 rounded inline-block">
+            <p>Add <i class="fa-solid fa-plus fa-xl"></i></p>
+        </a>
+    </div>
+{% endblock %}

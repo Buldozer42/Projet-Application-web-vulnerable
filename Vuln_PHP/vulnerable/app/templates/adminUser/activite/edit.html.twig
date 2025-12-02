@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Éditer Activité{% endblock %}
+
+{% block body %}
+    <div class="max-w-3xl mx-auto my-8 p-6 bg-white rounded-md shadow-md pb-20">
+        <a href="{{ path('app_activite_index') }}" class="inline-block my-4 bg-blue-500 hover:bg-blue-700 mt-4 text-white p-2 rounded">
+            <p>Back {#<i class="fa-solid fa-arrow-left fa-xl"></i>#}</p>
+        </a>
+        <h1 class="text-2xl font-semibold mb-6 text-center">Éditer une activité</h1>
+
+
+        {% include "adminUser/activite/_form.html.twig" with {deleteBtn: true} %}
+
+        {{ include('adminUser/activite/_delete_form.html.twig') }}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,3 @@
+# translations/messages.fr.yaml
+validators:
+    This value is already used: 'Il existe déjà un compte avec cet email'

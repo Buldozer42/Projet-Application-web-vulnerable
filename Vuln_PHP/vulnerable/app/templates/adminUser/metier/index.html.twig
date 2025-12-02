@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Métiers{% endblock %}
+
+{% block body %}
+    <div class="max-w-7xl mx-auto mt-8 p-6 bg-white rounded-md shadow-md">
+        <div class="flex my-4">
+            <a href="{{ path('homepage') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white p-2 rounded">
+                <p>Back {#<i class="fa-solid fa-arrow-left fa-xl"></i>#}</p>
+            </a>
+        </div>
+        <h1 class="text-2xl font-semibold mb-6 text-center">Métiers</h1>
+
+        <table class="min-w-full leading-normal mt-12 mb-12">
+            <thead>
+            <tr class="bg-blue-500 text-white p-5">
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Id</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Nom</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Compétence</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Activités</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for metier in metiers %}
+                <tr class="hover:bg-gray-100">
+                    <td class="px-4 py-2">{{ metier.id }}</td>
+                    <td class="px-4 py-2">{{ metier.nom }}</td>
+                    <td class="px-4 py-2">
+                        {% for competences in metier.competence %}
+                            {{ competences.nom }}{% if not loop.last %}, {% endif %}
+                        {% else %}
+                            Aucune compétence
+                        {% endfor %}
+                    </td>
+                    <td class="px-4 py-2">
+                        {% for activites in metier.activite %}
+                           {{ activites.nom }}{% if not loop.last %}, {% endif %}
+                        {% else %}
+                            Aucune activité
+                        {% endfor %}
+                    </td>
+                    <td class="px-4 py-2 flex justify-center">
+                        <a href="{{ path('app_metier_show', {'id': metier.id}) }}" class="flex items-center inline-block bg-blue-500 hover:bg-blue-700 text-white p-2 rounded">
+                            <p>show{# <i class="fa-solid fa-eye fa-xl"></i> #}</p>
+                        </a>
+                        <a href="{{ path('app_metier_edit', {'id': metier.id}) }}" class="inline-block bg-yellow-500 hover:bg-yellow-700 text-white p-2 rounded ml-4">
+                            <p>edit{# <i class="fa-solid fa-pen fa-xl"></i> #}</p>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="px-5 py-5 border-b border-gray-200 bg-white text-sm">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_metier_new') }}" class="mt-6 bg-green-500 hover:bg-green-700 text-white p-2 rounded inline-block">
+            <p>Add <i class="fa-solid fa-plus fa-xl"></i></p>
+        </a>
+    </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{{ form_start(form, {'attr': {'class': 'space-y-6 mb-4'}}) }}
+{% for field in form %}
+    {% if field.vars.name != '_token' %}
+        <div class="mb-4">
+            {{ form_label(field) }}
+            {% if field.vars.full_name matches '/ressource|salle|metier/' %}
+                <div class="mt-2">
+                    {% for child in field %}
+                        <div class="flex items-center mb-2">
+                            {{ form_widget(child, {'attr': {'class': 'shadow border rounded mr-2 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+                            {{ form_label(child, null, {'label_attr': {'class': 'text-gray-700'}}) }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form_widget(field, {'attr': {'class': 'shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+            {% endif %}
+            {{ form_errors(field) }}
+        </div>
+    {% else %}
+        {{ form_widget(field, {'attr': {'class': 'hidden'}}) }}
+    {% endif %}
+{% endfor %}
+
+        <div class="inline-flex justify-end space-x-2 mt-8 w-full">
+            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold p-2 rounded">
+                Valider {#<i class="fa-solid fa-floppy-disk fa-xl"></i>#}
+            </button>
+            {% if deleteBtn %}
+                <a href="{{ path('app_atelier_delete', {'id': atelier.id}) }}" onclick="return confirm('Are you sure you want to delete this item?');" class="inline-block bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded">
+                    Delete {#<i class="fa-solid fa-trash fa-xl"></i>#}
+                </a>
+            {% endif %}
+        </div>
+{{ form_end(form) }}

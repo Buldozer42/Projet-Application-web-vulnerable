@@ -1,0 +1,23 @@
+{{ form_start(form, {'attr': {'class': 'space-y-6, mb-4, max-w-md, flex, justify-center'}}) }}
+{% for field in form %}
+    {% if field.vars.name != '_token' %} {# Ne pas afficher le champ Token #}
+        <div class="mb-4">
+            {{ form_label(field) }}
+            {{ form_widget(field, {'attr': {'class': 'shadow flex justify-around rounded min-w-full mr-2 py-2 px-3 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+            {{ form_errors(field) }}
+        </div>
+    {% else %}
+        {{ form_widget(field, {'attr': {'class': 'hidden'}}) }} {# Rendre le champ Token caché #}
+    {% endif %}
+{% endfor %}
+        <div class="inline-flex justify-end space-x-2 mt-8 w-full">
+            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-4">
+                Valider {#<i class="fa-solid fa-floppy-disk fa-xl"></i>#}
+            </button>
+            {% if deleteBtn %}
+                <a href="{{ path('app_inscription_delete', {'id': inscription.id}) }}" onclick="return confirm('Are you sure you want to delete this item?');" class="inline-block bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded">
+                    Delete {#<i class="fa-solid fa-trash fa-xl"></i>#}
+                </a>
+            {% endif %}
+        </div>
+{{ form_end(form) }}

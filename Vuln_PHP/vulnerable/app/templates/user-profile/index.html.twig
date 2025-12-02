@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% if inscription is not empty %}
+        <div class="max-w-md mx-auto mt-8 p-6 bg-white rounded-md shadow-md">
+            <h1 class="text-2xl font-semibold mb-6">Utilisateur: {{ inscription.nom }}</h1>
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th class="py-2 px-4 border">Nom</th>
+                    <td class="py-2 px-4 border">{{ inscription.nom }}</td>
+                </tr>
+                <tr>
+                    <th class="py-2 px-4 border">Prénom</th>
+                    <td class="py-2 px-4 border">{{ inscription.prenom }}</td>
+                </tr>
+                <tr>
+                    <th class="py-2 px-4 border">Téléphone</th>
+                    <td class="py-2 px-4 border">{{ inscription.telephone }}</td>
+                </tr>
+                <tr>
+                    <th class="py-2 px-4 border">Lycée</th>
+                    <td class="py-2 px-4 border">{{ inscription.lycee }}</td>
+                </tr>
+                <tr>
+                    <th class="py-2 px-4 border">Section</th>
+                    <td class="py-2 px-4 border">{{ inscription.section }}</td>
+                </tr>
+                <tr>
+                    <th class="py-2 px-4 border">Date d'inscription</th>
+                    <td class="py-2 px-4 border">{{ inscription.date ? inscription.date|date('Y-m-d') : '' }}</td>
+                </tr>
+                <tr>
+                    <th class="py-2 px-4 border">Email</th>
+                    <td class="py-2 px-4 border">{{ inscription.user.email }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            {{ form(form) }}
+            <img src="{{ asset('uploads/images/' ~ app.user.imageFilename) }}" class="py-2">
+
+        </div>
+    {% else %}
+        <p class="text-gray-500">Utilisateur non disponible.</p>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <div class="mx-auto mt-8  bg-white rounded-md shadow-md" style="width: 800px; height: 679px; position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;">
+        <div class="flex">
+            <div class="p-6">
+            <h1 class="text-2xl font-semibold mb-6 text-center">Inscription</h1>
+                {{ form_errors(registrationForm) }}
+
+                {{ form_start(registrationForm, {'attr': {'class': 'space-y-4'}}) }}
+
+                {{ form_row(registrationForm.inscription.nom, {
+                    'attr': {'class': 'block w-full p-2 mb-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none'}
+                }) }}
+                {{ form_row(registrationForm.inscription.prenom, {
+                    'label': 'Prénom',
+                    'attr': {'class': 'block w-full p-2 mb-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none'}
+                }) }}
+                {{ form_row(registrationForm.email, {
+                    'attr': {'class': 'block w-full p-2 mb-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none'}
+                }) }}
+                {{ form_row(registrationForm.plainPassword, {
+                    'label': 'Mot de passe',
+                    'attr': {'class': 'block w-full p-2 mb-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none'}
+                }) }}
+                {{ form_row(registrationForm.inscription.telephone, {
+                    'label': 'Téléphone',
+                    'attr': {'class': 'block w-full p-2 mb-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none'}
+                }) }}
+
+                <div class="flex w-full gap-2">
+                    <div class="w-full">
+                        {{ form_row(registrationForm.inscription.lycee, {
+                                'label': 'Lycée',
+                                'attr': {'class': 'w-full p-2 mb-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none'}
+                        }) }}
+                    </div>
+                    <div class="w-full">
+                        {{ form_row(registrationForm.inscription.section, {
+                                'attr': {'class': 'w-full p-2 mb-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none'}
+                        }) }}
+                    </div>
+                </div>
+
+                <div class="flex items-center mt-4 gap-2">
+                    {{ form_widget(registrationForm.agreeTerms, {
+                        'attr': {'class': 'h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded'}
+                    }) }}
+                    {{ form_label(registrationForm.agreeTerms, null, {
+                        'label': 'Accepter les conditions',
+                        'label_attr': {'class': 'block text-sm font-medium text-gray-600'}
+                    }) }}
+                </div>
+
+                <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    S'inscrire
+                </button>
+                {{ form_end(registrationForm) }}
+            </div>
+            <div class="flex justify-center" style="width: auto;">
+                <div class="flex justify-center items-center half_circle h-full" style="background-color: #FBAB7E; background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%); width: 250px; border-bottom-left-radius: 290px; border-top-left-radius: 290px;">
+                    <div class="flex flex-col justify-center items-center" style="gap: 20px;">
+                        <div style="width: 0; height: 0; border-style: solid; border-width: 50.6px 32px 0 32px; border-color: white transparent transparent transparent;"></div>
+                        <p class="text-white font-small text-3xl text-center" style="max-width: 150px;">À un clic de nous rejoindre !</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

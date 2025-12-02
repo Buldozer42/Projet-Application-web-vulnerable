@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer Lycéen{% endblock %}
+
+{% block body %}
+    <div class="max-w-md mx-auto my-8 p-6 bg-white rounded-md shadow-md">
+        <a href="{{ path('app_inscription_index') }}" class="inline-block my-4 bg-blue-500 hover:bg-blue-700 mt-4 text-white p-2 rounded">
+            <p>Back {#<i class="fa-solid fa-arrow-left fa-xl"></i>#}</p>
+        </a>
+        <h1 class="text-2xl font-semibold mb-6">Editer un lycéen</h1>
+
+        {% include "adminUser/inscription/_form.html.twig" with {deleteBtn: true} %}
+
+        {{ include('adminUser/inscription/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

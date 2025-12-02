@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Atelier{% endblock %}
+
+{% block body %}
+
+    {% if atelier is not empty %}
+        <div class="max-w-5xl mx-auto my-8 p-6 bg-white rounded-md shadow-md">
+            <div class="flex my-4">
+                <a href="{{ path('homepage') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white p-2 rounded">
+                    <i class="fa-solid fa-arrow-left fa-xl"></i>
+                </a>
+            </div>
+            <h1 class="text-2xl font-semibold mb-6 text-start">Atelier: {{ atelier.nom }}</h1>
+
+            <table class="min-w-full leading-normal">
+                <tbody>
+                <tr class="border-b">
+                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Nom</th>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ atelier.nom }}</td>
+                </tr>
+                <tr class="border-b">
+                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Intervenant</th>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ atelier.intervenant }}</td>
+                </tr>
+                <tr class="border-b">
+                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Salle</th>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        {% for salle in atelier.salle %}
+                            {{ salle.nom }}{% if not loop.last %}, {% endif %}
+                        {% else %}
+                            Aucun salle associé
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr class="border-b">
+                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Métier</th>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        {% for metier in atelier.metier %}
+                            {{ metier.nom }}{% if not loop.last %}, {% endif %}
+                        {% else %}
+                            Aucun métier associé
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr class="border-b">
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Secteur</th>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ atelier.secteur }}</td>
+                </tr>
+                <tr class="border-b">
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Ressource</th>
+                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {% for ressource in atelier.getRessource() %}
+                        {{ ressource.getNom() }}{% if not loop.last %}, {% endif %}
+                    {% else %}
+                        Aucune ressource associé
+                    {% endfor %}
+                </td>
+                </tr>
+                <tr class="border-b">
+                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Date de début</th>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        {{ atelier.dateDebut ? atelier.dateDebut|date('d-m-Y') : 'Non défini' }}
+                    </td>
+                </tr>
+                <tr class="border-b">
+                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Date de fin</th>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        {{ atelier.dateFin ? atelier.dateFin|date('d-m-Y') : 'Non défini' }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-gray-500 text-center my-8">Aucun détail d'atelier disponible.</p>
+    {% endif %}
+
+{% endblock %}

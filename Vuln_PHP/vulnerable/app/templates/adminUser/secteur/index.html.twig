@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Secteur{% endblock %}
+
+{% block body %}
+    <div class="max-w-7xl mx-auto mt-8 p-6 bg-white rounded-md shadow-md">
+        <div class="flex my-4">
+            <a href="{{ path('homepage') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white p-2 rounded">
+                <p>Back {#<i class="fa-solid fa-arrow-left fa-xl"></i>#}</p>
+            </a>
+        </div>
+        <h1 class="text-2xl font-semibold mb-6 text-center">Secteur</h1>
+
+        <table class="min-w-full leading-normal mt-12 mb-12">
+            <thead>
+            <tr class="bg-blue-500 text-white p-5">
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Id</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Nom</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider text-left pl-4">Description</th>
+                <th class="px-5 py-3 text-sm font-semibold uppercase tracking-wider">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for secteur in secteurs %}
+                <tr class="hover:bg-gray-100">
+                    <td class="px-4 py-2">{{ secteur.id }}</td>
+                    <td class="px-4 py-2">{{ secteur.nom }}</td>
+                    <td class="px-4 py-2">{{ secteur.description }}</td>
+                    <td class="px-4 py-2 flex justify-center">
+                        <a href="{{ path('app_secteur_show', {'id': secteur.id}) }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white p-2 rounded">
+                            <p>show{# <i class="fa-solid fa-eye fa-xl"></i> #}</p>
+                        </a>
+                        <a href="{{ path('app_secteur_edit', {'id': secteur.id}) }}" class="inline-block bg-yellow-500 hover:bg-yellow-700 text-white p-2 rounded ml-4">
+                            <p>edit{# <i class="fa-solid fa-pen fa-xl"></i> #}</p>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="px-5 py-5 border-b border-gray-200 bg-white text-sm">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_secteur_new') }}" class="mt-4 bg-green-500 hover:bg-green-700 text-white p-2 rounded inline-block">
+            <p>Add <i class="fa-solid fa-plus fa-xl"></i></p>
+        </a>
+    </div>
+{% endblock %}
