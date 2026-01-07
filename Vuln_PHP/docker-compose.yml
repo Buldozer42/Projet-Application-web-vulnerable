@@ -17,7 +17,8 @@ services:
       - ./infra/dev/vulnerable/symfony-php/project.ini:/usr/local/etc/php/conf.d/project.ini:ro
       - ./vulnerable/app:/var/www/app
     environment:
-      APP_ENV: dev
+      APP_ENV: prod
+      APP_DEBUG: '0'
     depends_on:
       - mariadb
     tty: true

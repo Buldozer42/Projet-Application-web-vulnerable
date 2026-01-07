@@ -46,10 +46,12 @@ class AtelierRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-    public function query(string $query) {
-        $sql = "SELECT intervenant, nom, date_debut, date_fin FROM atelier WHERE nom LIKE '%" .$query. "%' OR intervenant LIKE '%".$query."%'";
-        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-        $result = $stmt->executeQuery();
-        return $result->fetchAllAssociative();
+    public function findByNomOrIntervenant(string $query) {
+        return $this->createQueryBuilder('a')
+            ->where('a.nom LIKE :query')
+            ->orWhere('a.intervenant LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
     }
 }

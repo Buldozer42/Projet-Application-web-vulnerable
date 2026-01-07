@@ -81,7 +81,7 @@
                             </p>
                             {% if query %}
                             <p class="text-gray-600 text-sm mb-2">
-                                <span class="font-semibold">Date :</span> Du {{ atelier.date_debut }} au {{ atelier.date_fin }}
+                                <span class="font-semibold">Date :</span> Du {{ atelier.dateDebut|date('d/m/Y H:i') }} au {{ atelier.dateFin|date('d/m/Y H:i') }}
                             </p>
                             {% endif %}
                             <p class="text-gray-600 text-sm mb-2">

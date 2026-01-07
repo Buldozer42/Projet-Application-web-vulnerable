@@ -13,11 +13,11 @@ Une fois dans l’image, copier le paragraphe complet des commandes suivantes qu
 ```bash
 composer require --dev doctrine/doctrine-fixtures-bundle &&
 composer install &&
-php bin/console d:d:c && 
-php bin/console d:s:u --force &&
-php bin/console d:f:l &&
+php bin/console doctrine:database:create && 
+php bin/console doctrine:schema:update --force &&
+php bin/console doctrine:fixtures:load --no-interaction
 npm i && 
-npm run dev
+npm run build
 ```
 *Écrire `yes` quand c’est demandé.*
 

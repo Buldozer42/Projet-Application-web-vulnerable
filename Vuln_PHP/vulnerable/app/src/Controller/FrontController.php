@@ -8,8 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\DBAL\Connection;
 
 class FrontController extends AbstractController
 {
@@ -17,32 +15,28 @@ class FrontController extends AbstractController
 
     public function index(): Response
     {
-
         return $this->render('front/index.html.twig', [
         ]);
     }
 
     #[Route('/all-ateliers', name: 'all-articles')]
+    public function allAteliers(Request $request, AtelierRepository $atelierRepository): Response
+    {
+        // Récupère le terme de recherche
+        $query = $request->query->get('q', '');
+        $results = [];
 
-    public function allAteliers(Request $request, EntityManagerInterface $entity, AtelierRepository $atelierRepository): Response
-{
-    $query = $request->query->get('q', ''); // Récupère le terme de recherche
-    $results = [];
+        // Sanitisation : supprime les espaces inutiles
+        $query = trim($query);
 
-    // Si un terme de recherche est fourni, effectuez la recherche
-    if ($query) {
-        $results = $atelierRepository->query($query);
-    } else {
-        // Sinon, récupérez tous les ateliers
-        $results = $atelierRepository->findAll();
+        // Si un terme de recherche est fourni, effectuez la recherche sinon récupérez tous les ateliers
+        $results = $query ? $atelierRepository->findByNomOrIntervenant($query) : $atelierRepository->findAll();
+
+        return $this->render('front/all-articles.html.twig', [
+            'ateliers' => $results,
+            'query' => $query
+        ]);
     }
-
-    return $this->render('front/all-articles.html.twig', [
-        'ateliers' => $results,
-        'query' => $query
-    ]);
-}
-
 
     // création d'une route pour appeler le name dans un path
     #[Route('/logout', name: 'logout')]
@@ -54,14 +48,32 @@ class FrontController extends AbstractController
     }
 
     #[Route('/commande', name: 'commande')]
-    public function commande(Request $request): Response
+    public function commande(Request $request, AtelierRepository $atelierRepository): Response
     {
         $form = $this->createForm(CommandType::class);
         $form->handleRequest($request);
-        
+        // Liste des commandes autorisées
+        $allowedShellCommands = ['ls', 'date'];
+        $allowedAppCommands = ['php bin/console app:total'];
         if ($form->isSubmitted() && $form->isValid()) {
+            // Vérifie si la commande est dans la liste des commandes autorisées
             $commande = $form->getData()['commande'];
-            $output = shell_exec($commande);
+            if (in_array($commande, $allowedShellCommands)) {
+                $output = shell_exec($commande);
+            }
+            elseif (in_array($commande, $allowedAppCommands)) {
+                switch ($commande) {
+                    case 'php bin/console app:total':
+                        $totalAteliers = $atelierRepository->count([]);
+                        $output = "Total des ateliers : " . $totalAteliers;
+                        break;
+                    default:
+                        $output = 'Commande non autorisée.';
+                }
+            }
+            else {
+                $output = 'Commande non autorisée.';
+            }
         }
         return $this->render('adminUser/atelier/command.html.twig', [
             'form' => $form,

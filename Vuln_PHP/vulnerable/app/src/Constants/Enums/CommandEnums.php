@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Constants\Enums;
+
 enum CommandEnums: string
 {
     case ARTICLE_TOTAL = 'Total des ateliers';

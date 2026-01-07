@@ -74,7 +74,7 @@ class AppFixtures extends Fixture
         // Créer un User
         $user = new User();
         $user->setEmail("user@example.com");
-        $hashedPassword = $this->passwordHasher->hashPassword($user, 'user');
+        $hashedPassword = $this->passwordHasher->hashPassword($user, plainPassword: 'OC13Mlvhk8r4druo*');
         $user->setPassword($hashedPassword);
         $user->setRoles(['ROLE_STUDENT']);
         $user->setIsVerified(true);
@@ -82,7 +82,7 @@ class AppFixtures extends Fixture
 
         $user2 = new User();
         $user2->setEmail("admin@example.com");
-        $hashedPassword2 = $this->passwordHasher->hashPassword($user2, 'admin');
+        $hashedPassword2 = $this->passwordHasher->hashPassword($user2, 'TiIJrvqT0lKOBaVu*');
         $user2->setPassword($hashedPassword2);
         $user2->setRoles(['ROLE_ADMIN']);
         $user2->setIsVerified(true);
