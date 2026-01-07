@@ -52,7 +52,7 @@
 - [Point d'amélioration](#point-damélioration)
   - [Secrets](#secrets)
   - [Voters](#voters)
-- [Vérification par email](#vérification-par-email)
+  - [Vérification par email](#vérification-par-email)
 
 <div style="page-break-after: always;"></div>
 
@@ -1566,7 +1566,7 @@ Cette ajout n'est pas obligatoire mais pour une application plus complexe ou plu
 
 La documentation officielle de Symfony sur les Voters est disponible ici : https://symfony.com/doc/7.4/security/voters.html
 
-# Vérification par email
+## Vérification par email
 
 Dans l'application actuelle, le champ `isVerified` dans l'entité `User` n'est jamais utilisé pour vérifier si un utilisateur a confirmé son adresse email avant de se connecter.
 
